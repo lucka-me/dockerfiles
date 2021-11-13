@@ -31,9 +31,9 @@ jobs:
         with:
           context: ./annie
           push: true
-          tags:
-            - ${{ secrets.DOCKERHUB_USERNAME }}/annie:latest
-            - ghcr.io/${{ github.actor }}/annie:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/annie:latest
+            ghcr.io/${{ github.actor }}/annie:latest
           labels: |
             org.opencontainers.image.title=Annie
             org.opencontainers.image.url=https://github.com/${{ github.repository }}/tree/main/annie
