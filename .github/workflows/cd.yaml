@@ -10,7 +10,6 @@ env:
 
 jobs:
   build-annie:
-    if: github.event_name
     name: Build annie
     runs-on: ubuntu-latest
     permissions:
