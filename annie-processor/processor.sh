@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 queueFile=${QUEUE_FILE:-./queue.txt}
 outputPath=${OUTPUT_PATH:-./downloads}
