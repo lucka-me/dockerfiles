@@ -8,4 +8,4 @@ RUN tar zxvf annie.tar.gz && mv annie /usr/local/bin/annie && rm annie.tar.gz
 
 WORKDIR /workspace
 
-ENTRYPOINT [ 'annie' ]
+ENTRYPOINT [ "annie" ]

@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  build-annie:
-    name: Build annie
+  build:
+    name: Build and Push
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,7 +26,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push image
+      - name: Build and push annie
         uses: docker/build-push-action@v2
         with:
           context: ./annie
@@ -34,8 +34,3 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/annie:latest
             ghcr.io/${{ github.actor }}/annie:latest
-          labels: |
-            org.opencontainers.image.title=Annie
-            org.opencontainers.image.url=https://github.com/${{ github.repository }}/tree/main/annie
-            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}/tree/main/annie/README.md
-            org.opencontainers.image.source=https://github.com/${{ github.repository }}/tree/main/annie
