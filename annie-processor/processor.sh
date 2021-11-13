@@ -10,7 +10,7 @@ while
         line=$(head -n 1 $queueFile)
         [ ! -z $line ]
     do
-        sed -ci 1d $queueFile
+        tail -n +2 $queueFile > /tmp/annie-queue && cat /tmp/annie-queue > $queueFile && rm /tmp/annie-queue
         annie -o $outputPath $line
     done
 do
