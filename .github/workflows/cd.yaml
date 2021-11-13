@@ -34,3 +34,11 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/annie:latest
             ghcr.io/${{ github.actor }}/annie:latest
+      - name: Build and push annie-processor
+        uses: docker/build-push-action@v2
+        with:
+          context: ./annie-processor
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/annie-processor:latest
+            ghcr.io/${{ github.actor }}/annie-processor:latest

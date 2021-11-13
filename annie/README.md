@@ -1,3 +1,7 @@
 # annie
 
-Docker image of iawia002/annie.
+[iawia002/annie](https://github.com/iawia002/annie)
+
+```shell
+$ docker run annie --help
+```
