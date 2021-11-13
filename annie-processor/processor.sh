@@ -10,7 +10,7 @@ while
         line=$(head -n 1 $queueFile)
         [ ! -z $line ]
     do
-        sed -i 1d $queueFile
+        sed -ci 1d $queueFile
         annie -o $outputPath $line
     done
 do
