@@ -73,6 +73,8 @@ jobs:
     env:
       GOOS: linux
       GOARCH: amd64
+      CGO_ENABLED: 0
+      GO111MODULE: on
     steps:
       - name: Checkout
         uses: actions/checkout@v2
