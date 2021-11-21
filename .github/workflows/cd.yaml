@@ -76,6 +76,7 @@ jobs:
       GOARCH: amd64
       CGO_ENABLED: 0
       GO111MODULE: on
+      GIN_MODE: release
     steps:
       - name: Checkout
         uses: actions/checkout@v2
