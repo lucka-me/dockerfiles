@@ -70,6 +70,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    env:
+      GOOS: linux
+      GOARCH: amd64
     steps:
       - name: Checkout
         uses: actions/checkout@v2
