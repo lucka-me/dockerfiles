@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build and Push
+  build-annie:
+    name: Build and Publish annie
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,7 +26,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push annie
+      - name: Build and push image
         uses: docker/build-push-action@v2
         with:
           context: ./annie
@@ -34,7 +34,28 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/annie:latest
             ghcr.io/${{ github.actor }}/annie:latest
-      - name: Build and push annie-processor
+
+  build-annie-processor:
+    name: Build and Publish annie-processor
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login into Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login into GitHub Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
         uses: docker/build-push-action@v2
         with:
           context: ./annie-processor
@@ -42,3 +63,46 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/annie-processor:latest
             ghcr.io/${{ github.actor }}/annie-processor:latest
+
+  build-annie-server:
+    name: Build and Publish annie-server
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Chackout lucka-me/annie
+        uses: actions/checkout@v2
+        repository: lucka-me/annie
+        ref: add-server
+        path: ./annie-server/annie-repo
+      - name: Login into Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login into GitHub Packages
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16
+      - name: Build binary
+        run: |
+          cd ./annie-server/annie-repo
+          go get -v -t -d ./...
+          go build -trimpath --ldflags "-s -w -buildid=" -v -o ../annie
+      - name: Build and push image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./annie-server
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/annie-server:latest
+            ghcr.io/${{ github.actor }}/annie-server:latest
