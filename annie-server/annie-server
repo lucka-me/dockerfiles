@@ -1,0 +1,50 @@
+#!/bin/sh
+
+command="annie --server"
+
+if [ $ANNIE_DEBUG ]
+then
+    command="$command --debug"
+fi
+
+if [ $ANNIE_SILENT ]
+then
+    command="$command --silent"
+fi
+
+if [ ! -z "$ANNIE_CHUNK_SIZE" ]
+then
+    command="$command --chunk-size $ANNIE_CHUNK_SIZE"
+fi
+
+if [ ! -z "$ANNIE_MULTI_THREAD" ]
+then
+    command="$command --multi-thread $ANNIE_MULTI_THREAD"
+fi
+
+if [ ! -z "$ANNIE_OUTPUT_PATH" ]
+then
+    command="$command --output-path $ANNIE_OUTPUT_PATH"
+fi
+
+if [ ! -z "$ANNIE_RETRY" ]
+then
+    command="$command --retry $ANNIE_RETRY"
+fi
+
+if [ ! -z "$ANNIE_HOST" ]
+then
+    command="$command --host $ANNIE_HOST"
+fi
+
+if [ ! -z "$ANNIE_PORT" ]
+then
+    command="$command --port $ANNIE_PORT"
+fi
+
+if [ ! -z "$ANNIE_TOKEN" ]
+then
+    command="$command --token $ANNIE_TOKEN"
+fi
+
+$command

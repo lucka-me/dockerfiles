@@ -1,8 +1,9 @@
 FROM alpine
 
 RUN apk add ffmpeg
-COPY annie /usr/local/bin
+ADD annie /usr/local/bin
+ADD annie-server /usr/local/bin
 
 WORKDIR /workspace
 
-ENTRYPOINT [ "annie", "--server" ]
+ENTRYPOINT [ "annie-server" ]
